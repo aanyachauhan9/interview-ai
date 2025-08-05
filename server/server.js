@@ -16,9 +16,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-// ✅ Only this — use your valid API key here
 const genAI = new GoogleGenerativeAI({
-  apiKey: "AIzaSyDSJAZSTIKFwqhPAqNRKZEDW9_fYyAG4-k", // use your real key
+  apiKey: "AIzaSyDSJAZSTIKFwqhPAqNRKZEDW9_fYyAG4-k", 
 });
 
 app.post("/api/interview", async (req, res) => {
