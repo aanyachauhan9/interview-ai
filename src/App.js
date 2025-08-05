@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { askInterviewQuestion } from "./services/InterviewService";
+import "./index.css";
 
 function App() {
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleAsk = async () => {
+    if (!question.trim()) return;
+    setLoading(true);
+    const response = await askInterviewQuestion(question);
+    setAnswer(response);
+    setLoading(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Interview Taker AI</h1>
+      <textarea
+        placeholder="Ask a technical interview question..."
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        rows={4}
+      />
+      <button onClick={handleAsk} disabled={loading}>
+        {loading ? "Asking..." : "Ask"}
+      </button>
+      <div className="answer">
+        <h3>Answer:</h3>
+        <p>{answer}</p>
+      </div>
     </div>
   );
 }
